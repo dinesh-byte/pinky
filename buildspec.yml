@@ -5,8 +5,8 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - aws --version
-      - aws ecr get-login-password | docker login --username AWS --password-stdin 687028746904.dkr.ecr.ap-south-1.amazonaws.com/tricky
-      - REPOSITORY_URI=687028746904.dkr.ecr.ap-south-1.amazonaws.com/tricky
+      - aws ecr get-login-password | docker login --username AWS --password-stdin 051915746393.dkr.ecr.ap-south-1.amazonaws.com/red-dragon
+      - REPOSITORY_URI=051915746393.dkr.ecr.ap-south-1.amazonaws.com/red-dragon
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
   build:
@@ -22,7 +22,7 @@ phases:
       - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
-      - printf '[{"name":"nginx","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+      - printf '[{"name":"reddrogon","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
       - cat imagedefinitions.json 
 artifacts:
     files: imagedefinitions.json
